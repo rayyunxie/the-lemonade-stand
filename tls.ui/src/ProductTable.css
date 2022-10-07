@@ -1,0 +1,44 @@
+.Product-table {
+  background-color: #fafafa;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Product-table tr {
+  height: 100px;
+}
+
+.Product-table thead tr:first-child {
+  height: 40px;
+}
+
+.Product-table tbody tr:nth-child(1) {
+  border-top: 2px solid rgba(222, 222, 222, 0.1);
+}
+
+.Product-table tbody tr:nth-child(n+2) { 
+  border-top: 2px solid white;
+}
+
+.Product-price {
+  min-width: 48px;
+  max-width: 48px;
+  overflow: hidden;
+}
+
+.Product-total {
+  min-width: 54px;
+  max-width: 54px;
+  overflow: hidden;
+}
+
+.Product-delete {
+  padding-top: 5px;
+  border-radius: 5px;
+  border: none;
+  background: none;
+}
+
+.Product-delete:hover{
+  background:#fff;
+}

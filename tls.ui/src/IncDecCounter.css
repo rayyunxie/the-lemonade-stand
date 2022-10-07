@@ -1,0 +1,25 @@
+.IncDecCounter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.IncDecCounter span {
+  line-height: 30px;
+  font-family: 'Poppins';
+  margin-left: 5px;
+  margin-right: 5px;
+  min-width: 38px;
+  max-width: 38px;
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.IncDecCounter button {
+  padding: 2px 5px;
+}

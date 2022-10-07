@@ -1,0 +1,41 @@
+.OrderReview-table-wrapper {
+  max-height: 300px;
+  overflow: auto;
+  margin-bottom: 20px;
+}
+
+.OrderReview-table {
+  background-color: #fafafa;
+  border-collapse: separate;
+  width: 100%;
+  border-spacing: 0px;
+}
+
+.OrderReview-table tr {
+  height: 80px;
+}
+
+.OrderReview-price {
+  min-width: 48px;
+  max-width: 48px;
+  text-align: right;
+  overflow: hidden;
+}
+
+.OrderReview-total {
+  min-width: 54px;
+  max-width: 54px;
+  overflow: hidden;
+}
+
+.OrderReview-grand-total {
+  white-space: nowrap;
+}
+
+.OrderReview-full-name {
+  font-size: 16px;
+}
+
+.OrderReview-quantity {
+  width: 60px;
+}

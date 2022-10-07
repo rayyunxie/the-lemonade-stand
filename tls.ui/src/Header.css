@@ -1,0 +1,14 @@
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  margin: 10px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: auto;
+  background: #eeeeee;
+}
