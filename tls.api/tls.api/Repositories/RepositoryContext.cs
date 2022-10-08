@@ -14,6 +14,9 @@ namespace tls.api.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ProductReferenceConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+
             modelBuilder.Entity<OrderProductEntity>()
                 .HasKey(t => new { t.OrderId, t.ProductId });
 

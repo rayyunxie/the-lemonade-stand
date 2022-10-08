@@ -4,11 +4,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
+import LinearProgress from '@mui/material/LinearProgress';
 import {
-  calculateTotalCostFromArray,
   calculateTotalCostFromMap,
   compareProduct,
-  NewOrder,
+  Order,
   ProductView,
 } from './types';
 import { useState } from 'react';
@@ -17,42 +18,58 @@ import './OrderReview.css';
 type Props = {
   products: Map<string, ProductView>;
   isOpen: boolean;
+  isPlacingOrder: boolean;
+  isError: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  onPlaceOrder: (newOrder: NewOrder) => void;
+  onPlaceOrder: (newOrder: Order) => void;
 };
 
-export default function OrderReview(props: Props) {
-  const handleClose = () => props.setIsOpen(false);
+export default function OrderReview({
+  products,
+  isOpen,
+  isPlacingOrder,
+  isError,
+  setIsOpen,
+  onPlaceOrder,
+}: Props) {
+  const handleClose = () => {
+    if (!isPlacingOrder) {
+      setIsOpen(false);
+    }
+  };
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
-  const products = props.products;
 
   const handlePlaceOrder = () => {
     const selectedProducts = Array.from(products.values()).filter(
       (product) => product.quantity > 0
     );
 
-    const newOrder: NewOrder = {
+    const newOrder: Order = {
       products: selectedProducts.map((product) => {
         return {
-          productSizeId: product.id,
+          productId: product.id,
           quantity: product.quantity,
+          unitPrice: product.price,
         };
       }),
-      totalCost: calculateTotalCostFromArray(selectedProducts),
       name,
       contact,
     };
 
-    props.onPlaceOrder(newOrder);
+    onPlaceOrder(newOrder);
   };
 
   return (
     <Dialog
-      open={props.isOpen}
+      open={isOpen}
       onClose={handleClose}
       PaperProps={{
-        style: { borderRadius: 0, backgroundColor: '#fafafa' },
+        style: {
+          borderRadius: 0,
+          backgroundColor: '#fafafa',
+          minWidth: '180px',
+        },
       }}
     >
       <DialogTitle>Order Review</DialogTitle>
@@ -98,6 +115,8 @@ export default function OrderReview(props: Props) {
           fullWidth
           variant='standard'
           required
+          disabled={isPlacingOrder}
+          inputProps={{ maxLength: 60 }}
           onChange={(event) => setName(event.target.value)}
         />
         <TextField
@@ -109,18 +128,34 @@ export default function OrderReview(props: Props) {
           fullWidth
           variant='standard'
           required
+          disabled={isPlacingOrder}
+          inputProps={{ maxLength: 256 }}
           onChange={(event) => setContact(event.target.value)}
         />
+
+        {isError && (
+          <DialogContentText textAlign='center' marginTop='20px'>
+            Something went wrong there. <br />
+            Try refreshing the page, or try again later.
+          </DialogContentText>
+        )}
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
         <Button
           sx={{ textTransform: 'capitalize' }}
           onClick={handlePlaceOrder}
-          disabled={name.trim().length === 0 || contact.trim().length === 0}
+          disabled={
+            name.trim().length === 0 ||
+            contact.trim().length === 0 ||
+            isPlacingOrder
+          }
         >
           Place Order
         </Button>
       </DialogActions>
+      <div className='OrderReview-loading'>
+        {isPlacingOrder && <LinearProgress color='secondary' />}
+      </div>
     </Dialog>
   );
 }

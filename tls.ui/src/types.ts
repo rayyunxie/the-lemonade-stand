@@ -3,21 +3,20 @@ export type Product = {
   name: string;
   sizeName: string;
   sizeValue: number;
-  image: string;
+  imageUrl: string;
   price: number;
 };
 
-export type ProductQuantity = {
-  productSizeId: string;
+export type ProductWithQuantity = {
+  productId: string;
+  unitPrice: number;
   quantity: number;
 };
 
-export type NewOrder = {
-  products: ProductQuantity[];
-  // total cost of the selected products
-  totalCost: number;
+export type Order = {
   name: string;
   contact: string;
+  products: ProductWithQuantity[];
 };
 
 export type ProductSize = {
@@ -28,7 +27,7 @@ export type ProductSize = {
 export type ProductView = {
   id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   size: ProductSize;
   price: number;
   quantity: number;

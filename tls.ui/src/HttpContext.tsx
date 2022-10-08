@@ -15,9 +15,6 @@ const HttpProvider = ({ children }: Props): JSX.Element | null => {
   const axiosInstance = () =>
     axios.create({
       baseURL: process.env.REACT_APP_API_HOST,
-      headers: {
-        'Content-type': 'application/json',
-      },
     });
 
   const [client] = useState(axiosInstance);

@@ -1,4 +1,5 @@
-import { Button, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { FallbackProps } from 'react-error-boundary';
 
 export const ErrorBoundaryFallBack = ({

@@ -21,6 +21,7 @@ namespace tls.api
             builder.Services.ConfigureServiceManager();
 
             // Sql context
+            // Use TLSAPI__SqlConnection environment variable in production
             builder.Services.ConfigureSqlContext(appOptions.SqlConnection!);
 
             // Auto mapper

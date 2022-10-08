@@ -11,11 +11,8 @@ namespace tls.api.Extensions
         public static void ApplyPendingMigrations(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
-            if (!db.Database.IsInMemory() && !db.Database.EnsureCreated())
-            {
-                db.Database.Migrate();
-            }
+            using var db = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
+            db.Database.Migrate();
         }
 
         public static void ConfigureExceptionHandler(this WebApplication app)

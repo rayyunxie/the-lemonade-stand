@@ -7,12 +7,17 @@ type Props = {
   secondaryText: string;
 };
 
-export default function Portrait(props: Props) {
+export default function Portrait({
+  imgSrc,
+  imgAlt,
+  primaryText,
+  secondaryText,
+}: Props) {
   return (
     <div className='Portrait'>
-      <img src={props.imgSrc} alt={props.imgAlt} />
-      <span>{props.primaryText}</span>
-      <span>{props.secondaryText}</span>
+      <img src={imgSrc} alt={imgAlt} />
+      <span>{primaryText}</span>
+      <span>{secondaryText}</span>
     </div>
   );
 }

@@ -4,7 +4,7 @@ using tls.api.Service;
 namespace tls.api.Orders
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/orders")]
     public class OrderController : ControllerBase
     {
         private const string GetOrderRouteName = "OrderById";
@@ -24,7 +24,7 @@ namespace tls.api.Orders
             return Ok(orderDto);
         }
 
-        [HttpGet(Name = "CreateOrder")]
+        [HttpPost(Name = "CreateOrder")]
         public async Task<CreatedAtRouteResult> PostOrder([FromBody] OrderForCreationDto orderForCreationDto)
         {
             var orderDto = await _serviceManager.Order.CreateOrder(orderForCreationDto);
@@ -32,7 +32,7 @@ namespace tls.api.Orders
         }
 
         [HttpOptions]
-        public IActionResult GetCompaniesOptions()
+        public IActionResult GetOrdersOptions()
         {
             Response.Headers.Add("Allow", "GET, HEAD, POST, OPTIONS");
             return Ok();

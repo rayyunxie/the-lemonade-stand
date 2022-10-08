@@ -39,3 +39,7 @@
 .OrderReview-quantity {
   width: 60px;
 }
+
+.OrderReview-loading {
+  height: 4px;
+}
