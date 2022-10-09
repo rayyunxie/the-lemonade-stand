@@ -7,15 +7,16 @@ namespace tls.api.Products
 
     public class ProductRepository : RepositoryBase<Entity>, IProductRepository
     {
-        public ProductRepository(RepositoryContext repositoryContext) : base(repositoryContext)
-        {
-        }
+        public ProductRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
 
         public Task<Entity?> GetProduct(Guid id) =>
             GetAll().Include(a => a.ProductReference).FirstOrDefaultAsync(entity => entity.Id == id);
 
         public Task<List<Entity>> GetAllProducts() =>
             GetAll().Include(a => a.ProductReference).ToListAsync();
+
+        public Task<List<Entity>> GeProductCollection(IEnumerable<Guid> ids) =>
+            FindByCondition(entity => ids.Contains(entity.Id)).ToListAsync();
 
         public Task<Entity?> TrackProduct(Guid id) =>
             GetAllAsTracking().FirstOrDefaultAsync(entity => entity.Id == id);

@@ -1,4 +1,6 @@
-﻿namespace tls.api.Orders
+﻿using tls.api.OrderProducts;
+
+namespace tls.api.Orders
 {
     public record OrderDto
     {

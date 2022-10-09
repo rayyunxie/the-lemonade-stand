@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using tls.api.OrderProducts;
 
 namespace tls.api.Orders
 {
@@ -12,6 +13,8 @@ namespace tls.api.Orders
         [MaxLength(256, ErrorMessage = "Maximum length for the Contact is 256 characters.")]
         public string? Contact { get; init; }
 
+        [Required(ErrorMessage = "Products is a required field.")]
+        [MinLength(1, ErrorMessage = "Order must contain at least one product.")]
         public IEnumerable<OrderProductDto>? Products { get; init; }
     }
 }

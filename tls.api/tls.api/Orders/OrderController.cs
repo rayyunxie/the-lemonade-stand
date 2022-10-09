@@ -25,7 +25,7 @@ namespace tls.api.Orders
         }
 
         [HttpPost(Name = "CreateOrder")]
-        public async Task<CreatedAtRouteResult> PostOrder([FromBody] OrderForCreationDto orderForCreationDto)
+        public async Task<CreatedAtRouteResult> CreateOrder([FromBody] OrderForCreationDto orderForCreationDto)
         {
             var orderDto = await _serviceManager.Order.CreateOrder(orderForCreationDto);
             return CreatedAtRoute(GetOrderRouteName, new { id = orderDto.Id }, orderDto);

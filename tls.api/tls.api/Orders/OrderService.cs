@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using tls.api.Errors;
+using tls.api.OrderProducts;
 using tls.api.Repositories;
 
 namespace tls.api.Orders
@@ -17,6 +18,8 @@ namespace tls.api.Orders
 
         public async Task<OrderDto> CreateOrder(OrderForCreationDto orderForCreationDto)
         {
+            await CheckProductValid(orderForCreationDto.Products!);
+
             var orderEntity = _mapper.Map<OrderEntity>(orderForCreationDto);
 
             _repositoryManager.Order.CreateOrder(orderEntity);
@@ -40,6 +43,31 @@ namespace tls.api.Orders
             }
 
             return orderEntity;
+        }
+
+        private async Task CheckProductValid(IEnumerable<OrderProductDto> orderProductDtos)
+        {
+            var productIds = orderProductDtos.Select(i => i.ProductId ?? Guid.Empty);
+            var productEntities = await _repositoryManager.Product.GeProductCollection(productIds);
+            var missingProductIds = productIds.Except(productEntities.Select(i => i.Id));
+            var missingCount = missingProductIds.Count();
+            if (missingCount > 0)
+            {
+                throw missingCount > 1 ?
+                    new ProductsNotFoundException(missingProductIds) :
+                    new ProductNotFoundException(missingProductIds.First());
+            }
+
+            var productEntityMap = productEntities.ToDictionary(x => x.Id, x => x);
+            var productsWithMismatchPrice = orderProductDtos.Where(
+                i => Math.Abs(i.UnitPrice - productEntityMap[i.ProductId ?? Guid.Empty].Price) >= 0.01);
+            var mistmatchCount = productsWithMismatchPrice.Count();
+            if (mistmatchCount > 0)
+            {
+                throw mistmatchCount > 1 ?
+                    new ProductsPriceMismatchException(productsWithMismatchPrice.Select(i => i.ProductId ?? Guid.Empty)) :
+                    new ProductPriceMismatchException(productsWithMismatchPrice.First().ProductId ?? Guid.Empty);
+            }
         }
     }
 }

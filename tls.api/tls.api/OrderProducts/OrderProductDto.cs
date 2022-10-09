@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace tls.api.Orders
+namespace tls.api.OrderProducts
 {
     public record OrderProductDto
     {
