@@ -4,3 +4,4 @@
 /tls.api/obj
 /tls.api/bin
 /tls.api/*.user
+/tls.api/Properties/PublishProfiles/*.user
