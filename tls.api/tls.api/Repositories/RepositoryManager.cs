@@ -24,6 +24,15 @@ namespace tls.api.Repositories
 
         public Task Save()
         {
+            var entries = _repositoryContext.ChangeTracker
+                .Entries<OrderEntity>()
+                .Where(entity => entity.State == EntityState.Added);
+
+            foreach (var entityEntry in entries)
+            {
+                entityEntry.Entity.CreatedDate = DateTime.Now.ToUniversalTime();
+            }
+
             return _repositoryContext.SaveChangesAsync();
         }
 

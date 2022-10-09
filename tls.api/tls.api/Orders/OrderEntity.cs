@@ -18,6 +18,9 @@ namespace tls.api.Orders
         [MaxLength(256, ErrorMessage = "Maximum length for the Contact is 256 characters")]
         public string? Contact { get; set; }
 
+        [Required(ErrorMessage = "CreatedDate is a required field.")]
+        public DateTime CreatedDate { get; set; }
+
         public ICollection<OrderProductEntity>? OrderProducts { get; set; }
     }
 }

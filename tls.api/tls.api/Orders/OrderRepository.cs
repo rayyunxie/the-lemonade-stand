@@ -12,7 +12,7 @@ namespace tls.api.Orders
         }
 
         public Task<Entity?> GetOrder(Guid id) =>
-            GetAll().FirstOrDefaultAsync(entity => entity.Id == id);
+            GetAll().Include(entity => entity.OrderProducts).FirstOrDefaultAsync(entity => entity.Id == id);
 
         public Task<Entity?> TrackOrder(Guid id) =>
             GetAllAsTracking().FirstOrDefaultAsync(entity => entity.Id == id);

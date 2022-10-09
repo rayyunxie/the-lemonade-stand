@@ -39,12 +39,7 @@ namespace tls.api.Products
 
         public string? GetImageUrl()
         {
-            if (!string.IsNullOrEmpty(ImageUrl))
-            {
-                return ImageUrl;
-            }
-
-            return ProductReference?.ImageUrl;
+            return !string.IsNullOrEmpty(ImageUrl) ? ImageUrl : ProductReference?.ImageUrl;
         }
 
         public ICollection<OrderProductEntity>? OrderProducts { get; set; }
