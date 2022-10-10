@@ -1,0 +1,24 @@
+title Place Order
+
+participant Client
+participant API.Controller
+participant API.ProductService
+participant API.ProductRepository
+participant Database
+
+Client-->API.Controller:POST api/orders
+API.Controller-->API.ProductService:Create order with creation DTO
+API.ProductService-->API.ProductRepository:Get all products related to the order
+API.ProductRepository-->Database:Query for product collection
+API.ProductRepository<--Database:Returns a list of product entities
+API.ProductService<--API.ProductRepository:Forwards the product entity list
+API.ProductService<-API.ProductService:Checks for missing products
+API.ProductService<-API.ProductService:Checks for mismatched product price
+API.ProductService<-API.ProductService:Converts the creation DTO to order entity
+API.ProductService->API.ProductRepository:Create a new order entity
+API.ProductRepository-->Database:Save changes
+API.ProductRepository<--Database:Returns the new order entity data
+API.ProductService<--API.ProductRepository:Fills the order entity with the returned data
+API.ProductService<-API.ProductService:Converts to an order DTO
+API.Controller<--API.ProductService:Returns the order DTO
+Client<--API.Controller:Receives response with an order DTO

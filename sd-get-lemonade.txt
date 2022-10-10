@@ -1,0 +1,17 @@
+title View Lemonades
+
+participant Client
+participant API.Controller
+participant API.ProductService
+participant API.ProductRepository
+participant Database
+
+Client-->API.Controller:GET api/products
+API.Controller-->API.ProductService:Get all products
+API.ProductService-->API.ProductRepository:Get all products
+API.ProductRepository-->Database:Query for all products
+API.ProductRepository<--Database:Returns a list of product entities
+API.ProductService<--API.ProductRepository:Forwards the entity list
+API.ProductService<-API.ProductService:Convert database entities to DTOs
+API.Controller<--API.ProductService:Return a list of product DTOs
+Client<--API.Controller:Receives response with product DTOs
